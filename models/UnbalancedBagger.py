@@ -3,11 +3,14 @@ from sklearn.tree import DecisionTreeClassifier
 import random
 from scipy.stats import mode
 
-def unbalanced_bagger(x, y, M = 1, sampling_techniques = None, base_estimator = None):
+def unbalanced_bagger(x, y, M = 1, sampling_techniques = None, base_estimator = None, random_seed = None):
     if sampling_techniques is None:
         sampling_techniques = []
     if base_estimator is None:
-        base_estimator = DecisionTreeClassifier()
+        if random_seed is None:
+            base_estimator = DecisionTreeClassifier()
+        else:
+            base_estimator = DecisionTreeClassifier(random_state=random_seed)
 
     base_learners = []
     for i in range(M):
